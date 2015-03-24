@@ -24,18 +24,19 @@
 # MA 02111-1307, USA.
 #
 #******************************************************************************
-
+from PyQt4 import uic
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from os import path
 
 from qgis.core import *
 from qgis.gui import *
 
-from ui.ui_mergeshapesdialogbase import Ui_MergeShapesDialog
+FORM_CLASS, _ = uic.loadUiType(path.join(path.dirname(__file__), 'ui/' 'mergeshapesdialogbase.ui'))
 
 
-class MergeShapesDialog(QDialog, Ui_MergeShapesDialog):
+class MergeShapesDialog(QDialog, FORM_CLASS):
     def __init__(self, iface):
         QDialog.__init__(self)
         self.setupUi(self)
@@ -83,8 +84,8 @@ class MergeShapesDialog(QDialog, Ui_MergeShapesDialog):
         self.leOutShape.setText(self.outFileName)
 
     def inputFile(self):
-        (files, encoding) = selopenDialog(self)
-        if files.isEmpty() or encoding is None:
+        (files, encoding) = self.openDialog(self)
+        if not files or encoding is None:
             self.inputFiles = None
             return
 
@@ -293,7 +294,7 @@ class MergeShapesDialog(QDialog, Ui_MergeShapesDialog):
             if layerGeometry == QGis.Polygon and geomType == 0:
                 outShapes.append(fileName)
             elif layerGeometry == QGis.Line and geomType == 1:
-                outShapes,append(fileName)
+                outShapes.append(fileName)
             elif layerGeometry == QGis.Point and geomType == 2:
                 outShapes.append(fileName)
 

@@ -26,18 +26,19 @@
 #******************************************************************************
 
 
-import os
+
 import ConfigParser
+from PyQt4 import uic
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from os import path
 
-from ui.ui_aboutdialogbase import Ui_Dialog
-
-import resources_rc
+FORM_CLASS, _ = uic.loadUiType(path.join(path.dirname(__file__), 'ui/' 'aboutdialogbase.ui'))
 
 
-class AboutDialog(QDialog, Ui_Dialog):
+
+class AboutDialog(QDialog, FORM_CLASS):
     def __init__(self):
         QDialog.__init__(self)
         self.setupUi(self)
@@ -45,7 +46,7 @@ class AboutDialog(QDialog, Ui_Dialog):
         self.btnHelp = self.buttonBox.button(QDialogButtonBox.Help)
 
         cfg = ConfigParser.SafeConfigParser()
-        cfg.read(os.path.join(os.path.dirname(__file__), "metadata.txt"))
+        cfg.read(path.join(path.dirname(__file__), "metadata.txt"))
         version = cfg.get("general", "version")
 
         self.lblLogo.setPixmap(QPixmap(":/icons/mergeshapes.png"))

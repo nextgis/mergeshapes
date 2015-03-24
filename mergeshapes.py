@@ -26,19 +26,16 @@
 #******************************************************************************
 
 
-import os
-import ConfigParser
-
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
-
+from os import path
 from qgis.core import *
-from qgis.gui import *
 
 import mergeshapesdialog
 import aboutdialog
 
-import resources_rc
+
+ICONS_PATH = path.join(path.dirname(__file__), 'icons/')
 
 
 class MergeShapesPlugin(object):
@@ -76,10 +73,10 @@ class MergeShapesPlugin(object):
                                 QCoreApplication.translate("MergeShapes", "This version of MergeShapes requires at least QGIS version 2.0\nPlugin will not be enabled."))
             return None
 
-        self.actionRun = QAction(QIcon(":/icons/mergeshapes.png"), "MergeShapes", self.iface.mainWindow())
+        self.actionRun = QAction(QIcon(path.join(ICONS_PATH, "mergeshapes.png")), "MergeShapes", self.iface.mainWindow())
         self.actionRun.setStatusTip(QCoreApplication.translate("MergeShapes", "Merge multiple shapefiles to one"))
         self.actionRun.setWhatsThis(QCoreApplication.translate("MergeShapes", "Merge multiple shapefiles to one"))
-        self.actionAbout = QAction(QIcon(":/icons/about.png"), "About", self.iface.mainWindow())
+        self.actionAbout = QAction(QIcon(path.join(ICONS_PATH, "/about.png")), "About", self.iface.mainWindow())
 
         self.actionRun.triggered.connect(self.run)
         self.actionAbout.triggered.connect(self.about)
