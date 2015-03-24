@@ -55,9 +55,9 @@ class MergeShapesPlugin(object):
             localeFullName = QSettings().value("locale/userLocale", "")
 
         if QFileInfo(userPluginPath).exists():
-            translationPath = userPluginPath + "/i18n/mergeshapes_" + localeFullName + ".qm"
+            translationPath = userPluginPath + "/i18n/mergeshapes_" + localeFullName[:2] + ".qm"
         else:
-            translationPath = systemPluginPath + "/i18n/mergeshapes_" + localeFullName + ".qm"
+            translationPath = systemPluginPath + "/i18n/mergeshapes_" + localeFullName[:2] + ".qm"
 
         self.localePath = translationPath
         if QFileInfo(self.localePath).exists():
